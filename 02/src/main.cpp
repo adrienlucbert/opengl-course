@@ -2,7 +2,6 @@
 #define SUCCODE (0)
 
 #include <iostream>
-#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 int setup(void)
@@ -37,11 +36,6 @@ int main(void)
         return (-1);
     }
     glfwMakeContextCurrent(window);
-    if (glewInit() != GLEW_OK) {
-        std::cerr << "Glew init failed" << std::endl;
-        return (ERRCODE);
-    }
-    std::cout << glGetString(GL_VERSION) << std::endl;
     while (!glfwWindowShouldClose(window)) {
         display();
         glfwSwapBuffers(window);
