@@ -1,5 +1,6 @@
 ---
-AlignAfterOpenBracket: DontAlign
+AccessModifierOffset: -2
+AlignAfterOpenBracket: Align
 AlignConsecutiveMacros: true
 AlignConsecutiveAssignments: false
 AlignConsecutiveDeclarations: false
@@ -18,7 +19,7 @@ AllowShortLoopsOnASingleLine: false
 AlwaysBreakAfterDefinitionReturnType: None
 AlwaysBreakAfterReturnType: None
 AlwaysBreakBeforeMultilineStrings: false
-AlwaysBreakTemplateDeclarations: true
+AlwaysBreakTemplateDeclarations: Yes
 BraceWrapping:
   AfterClass: true
   AfterControlStatement: false
@@ -42,11 +43,12 @@ BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: BeforeComma
 BreakInheritanceList: BeforeComma
 BreakStringLiterals: true
-ColumnLimit: 0
+ColumnLimit: 80
 CompactNamespaces: false
 ConstructorInitializerAllOnOneLineOrOnePerLine: false
 ConstructorInitializerIndentWidth: 4
 Cpp11BracedListStyle: false
+FixNamespaceComments: true
 IncludeBlocks: Merge
 IndentCaseLabels: true
 IndentPPDirectives: BeforeHash
