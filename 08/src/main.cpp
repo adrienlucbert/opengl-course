@@ -10,7 +10,7 @@
 #define SUCCODE (0)
 
 #include <iostream>
-#include "Shader/ShaderManager.hpp"
+#include "Shader/Shader.hpp"
 #include "Wrappers/GLEW/Glew.hpp"
 #include "Wrappers/GLFW/Glfw.hpp"
 #include "Wrappers/GLFW/Window.hpp"
@@ -23,8 +23,6 @@ int main(void)
     GLFW::Window window(640, 480, "Hello world");
     GLEW::Glew glew;
 
-    std::cout << glGetString(GL_VERSION) << std::endl;
-
     // clang-format off
     float positions[] = {
         -0.5f, -0.5f,
@@ -33,7 +31,7 @@ int main(void)
     };
     // clang-format on
 
-    GLuint buffer;
+    unsigned int buffer;
     glGenBuffers(1, &buffer);
     glBindBuffer(GL_ARRAY_BUFFER, buffer);
     glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), positions, GL_STATIC_DRAW);
@@ -41,11 +39,8 @@ int main(void)
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
 
-    std::string vertexShader;
-    ShaderManager::readShaderFromFile("src/shaders/vertex.shader", vertexShader);
-    std::string fragmentShader;
-    ShaderManager::readShaderFromFile("src/shaders/fragment.shader", fragmentShader);
-    unsigned int shader = ShaderManager::createShader(vertexShader, fragmentShader);
+    Shader::programSource source = Shader::parse("res/shaders/basic.shader");
+    unsigned int shader = Shader::create(source.vertexSource, source.fragmentSource);
     glUseProgram(shader);
     while (!glfwWindowShouldClose(*window)) {
         glClear(GL_COLOR_BUFFER_BIT);
