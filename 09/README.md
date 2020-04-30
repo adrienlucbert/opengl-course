@@ -50,7 +50,7 @@ To create the index buffer in OpenGL, we pretty much do as we did to create the 
 unsigned int ibo;
 glGenBuffers(1, &ibo);
 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(float), indices, GL_STATIC_DRAW);
+glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 ```
 
 In the rendering loop, we then replace the `glDrawArray` with a `glDrawElements` call:

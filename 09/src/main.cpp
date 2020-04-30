@@ -49,7 +49,7 @@ int main(void)
     unsigned int ibo;
     glGenBuffers(1, &ibo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(float), indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 
     Shader::programSource source = Shader::parse("res/shaders/basic.shader");
     unsigned int shader = Shader::create(source.vertexSource, source.fragmentSource);
