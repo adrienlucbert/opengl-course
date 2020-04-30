@@ -61,9 +61,15 @@ int main(void)
     };
     // clang-format on
 
-    unsigned int buffer;
-    glCall(glGenBuffers(1, &buffer));
-    glCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
+    // vertex array object
+    unsigned int vao;
+    glCall(glGenVertexArrays(1, &vao));
+    glCall(glBindVertexArray(vao));
+
+    // vertex buffer object
+    unsigned int vbo;
+    glCall(glGenBuffers(1, &vbo));
+    glCall(glBindBuffer(GL_ARRAY_BUFFER, vbo));
     glCall(glBufferData(GL_ARRAY_BUFFER, 4 * 2 * sizeof(float), positions, GL_STATIC_DRAW));
 
     glCall(glEnableVertexAttribArray(0));
@@ -73,26 +79,42 @@ int main(void)
     unsigned int ibo;
     glCall(glGenBuffers(1, &ibo));
     glCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
-    glCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(float), indices, GL_STATIC_DRAW));
+    glCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(float), indices, GL_STATIC_DRAW));
 
     Shader::programSource source = Shader::parse("res/shaders/basic.shader");
     unsigned int shader = Shader::create(source.vertexSource, source.fragmentSource);
     glUseProgram(shader);
 
     glCall(int location = glGetUniformLocation(shader, "u_color"));
-
     float r = 0.0f;
     float increment = 0.05f;
+
+    glBindVertexArray(0);
+    glUseProgram(0);
+    glCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+    glCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+
     while (!glfwWindowShouldClose(*window)) {
         glClear(GL_COLOR_BUFFER_BIT);
+
+        glUseProgram(shader);
         glCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f));
+
+        glCall(glBindVertexArray(vao));
+        glCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
+
         glCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+
         if (r > 1.0f || r < 0.0f)
             increment *= -1;
         r += increment;
+
         glfwSwapBuffers(*window);
         glfwPollEvents();
     }
     glDeleteProgram(shader);
+    glDeleteVertexArrays(1, &vao);
+    glDeleteBuffers(1, &vbo);
+    glDeleteBuffers(1, &ibo);
     return 0;
 }
