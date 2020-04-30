@@ -17,6 +17,7 @@ o------o
 To draw this shape, we may use 6 vertices
 - first triangle: { 0, 1, 2 }
 - second triangle: { 2, 3, 0 }
+
 By doing so, if we define 3 vertices for our first triangle, and 3 vertices for 
 our second triangle, vertices 0 and 2 are duplicated. We don't want to waste 
 GPU memory.
@@ -45,6 +46,7 @@ unsigned int indices[] = {
 To create the index buffer in OpenGL, we pretty much do as we did to create the positions array buffer:
 
 ```c++
+// Index buffer object
 unsigned int ibo;
 glGenBuffers(1, &ibo);
 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
@@ -56,4 +58,5 @@ In the rendering loop, we then replace the `glDrawArray` with a `glDrawElements`
 glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 ```
 
-> index buffer elements **MUST** always be unsigned (u char, u int, ...)
+> Index buffer elements **MUST** always be unsigned (u char, u int, ...)
+> If not, you will face a black screen in most cases.
